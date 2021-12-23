@@ -13,7 +13,7 @@ defmodule JsonFormatter do
 
   @impl true
   def features(_opts) do
-    [sigils: [:j, :J], extensions: [".json"]]
+    [sigils: [:J], extensions: [".json"]]
   end
 
   @impl true

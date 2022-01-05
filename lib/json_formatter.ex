@@ -7,6 +7,7 @@ defmodule JsonFormatter do
   * Support sigils `:j` and `:J`, shipped with `:jason` version
     `1.3` or newer.
   * Works with `.json` file extension.
+  * Preserves key order.
   """
 
   @behaviour Mix.Tasks.Format
@@ -18,7 +19,8 @@ defmodule JsonFormatter do
 
   @impl true
   def format(contents, _opts) do
-    Jason.decode!(contents)
+    contents
+    |> Jason.decode!(objects: :ordered_objects)
     |> Jason.encode!(pretty: [indent: "  ", line_separator: "\n", after_colon: " "])
   end
 end

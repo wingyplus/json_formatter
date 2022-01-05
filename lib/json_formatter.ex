@@ -18,9 +18,18 @@ defmodule JsonFormatter do
   end
 
   @impl true
-  def format(contents, _opts) do
+  def format(contents, opts) do
     contents
     |> Jason.decode!(objects: :ordered_objects)
     |> Jason.encode!(pretty: [indent: "  ", line_separator: "\n", after_colon: " "])
+    |> maybe_insert_final_newline(opts)
+  end
+
+  defp maybe_insert_final_newline(content, opts) do
+    if opts[:extension] do
+      content <> "\n"
+    else
+      content
+    end
   end
 end
